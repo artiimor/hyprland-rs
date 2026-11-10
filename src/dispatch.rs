@@ -757,13 +757,13 @@ pub(crate) fn gen_dispatch_str(cmd: DispatchType, dispatch: bool) -> crate::Resu
     let sep = if dispatch { " " } else { "," };
     let string_to_pass = match &cmd {
         Custom(name, args) => format!("{name}{sep}{args}"),
-        Exec(sh) => format!("exec{sep}{sh}"),
+        Exec(sh) => format!("hl.dsp.exec_cmd(\'{sh}\')"),
         ExecRaw(sh) => format!("execr{sep}{sh}"),
         Pass(win) => format!("pass{sep}{win}"),
         Global(name) => format!("global{sep}{name}"),
         KillActiveWindow => "killactive".to_string(),
         ForceKillActiveWindow => "forcekillactive".to_string(),
-        CloseWindow(win) => format!("closewindow{sep}{win}"),
+        CloseWindow(win) => format!("hl.dsp.window.close('window = {win}')"),
         Workspace(work) => format!("workspace{sep}{work}"),
         MoveToWorkspace(work, Some(win)) => format!("movetoworkspace{sep}{work},{win}"),
         MoveToWorkspace(work, None) => format!("movetoworkspace{sep}{work}"),
